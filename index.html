@@ -587,17 +587,19 @@ add_trace_processor(processor)   # keeps the SDK's own exporter; one capsule per
     <div class="sec-head">
       <span class="eyebrow">Verify</span>
       <h2>From the bytes. Offline. Trust the log's key — not the operator.</h2>
-      <p>This is what an auditor runs against a ledger of capsules. Tamper any field and <code class="mono">ok</code> turns false.</p>
+      <p>This is what an auditor runs against a ledger of capsules. Tamper any field, or the signature, and the record turns <code class="mono">INVALID</code>.</p>
     </div>
     <div class="verify-grid">
-<pre class="code"><span class="c"># install the reference verifier</span>
-pip install agent-action-capsule
+<pre class="code"><span class="c"># install capsule-emit (the reference verifier ships with it)</span>
+pip install capsule-emit
 
 <span class="c"># verify a ledger of sealed actions, offline</span>
-agent-action-capsule verify --store ledger.jsonl
+capsule-emit verify --store ledger.jsonl
 
-  <span class="s">capsule_id</span>  9f2a…c14  <span class="ok">ok</span>
-  <span class="s">capsule_id</span>  4b07…8de  <span class="ok">ok</span>
+  <span class="ok">VALID</span>
+  <span class="ok">VALID</span>
+
+2/2 VALID
   <span class="c"># inclusion on the public log:</span>
   substrate.receipt_verified: <span class="ok">True</span></pre>
       <div class="verify-points">
@@ -636,7 +638,7 @@ agent-action-capsule verify --store ledger.jsonl
       <div class="card">
         <div class="k" style="color:var(--verify)">Rung 1 · Stub</div>
         <h3>Structured records, offline verify</h3>
-        <p>Set <code>CAPSULE_ANCHOR=false</code>. Structured records, local ledger file, offline verification. Zero services. The ten-minute first touch — no network, no account.</p>
+        <p>Set <code>CAPSULE_WITNESS=off</code>. Signed structured records, local ledger file, offline verification. Zero services. The ten-minute first touch — no network, no account.</p>
         <p style="margin-top:10px;font-size:13px;color:var(--muted)">Page renders: <em>self-attested / not witnessed</em></p>
       </div>
       <div class="card">
